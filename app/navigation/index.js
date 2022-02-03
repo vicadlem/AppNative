@@ -5,36 +5,58 @@ import {createStackNavigator} from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
 import Home from '../views/Home';
-import Login from '../views/Login';
-import SignUp from '../views/SignUp';
+import Ventures from '../views/Ventures';
+import Products from '../views/Products';
 
 const Navigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
-          name="Home"
+          name="SOMOS HOJANCHA"
           component={Home}
           options={{
-            headerShown: false,
+            headerStyle: {
+              backgroundColor: '#365314',          
+            },
+            headerTitleAlign: 'center',
+            headerTintColor: '#fff',
+            headerBackTitleStyle: {
+              fontWeight: 'bold'
+            }
           }}
         />
         <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{
-            title: 'Iniciar Sesión',
-            headerShown: false,
-          }}
+          name="Ventures"
+          component={Ventures}
+          options={ ({route}) => ({
+            title: route.params.nombre,
+            headerStyle: {
+              backgroundColor: '#365314'
+            },
+            headerTitleAlign: 'center',
+            headerTintColor: '#fff',
+            headerBackTitleStyle: {
+              fontWeight: 'bold'
+            }
+          })}
         />
         <Stack.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{
-            title: 'Crear cuenta',
-          }}
+          name="Products"
+          component={Products}
+          options={ ({route}) => ({
+            title: route.params.nombre,
+            headerStyle: {
+              backgroundColor: '#365314'
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+            headerBackTitleStyle: {
+              fontWeight: 'bold'
+            }
+          })}
         />
-      </Stack.Navigator>
+        </Stack.Navigator>
     </NavigationContainer>
   );
 };

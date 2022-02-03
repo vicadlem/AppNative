@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client';
 import { Card, Title, Paragraph } from 'react-native-paper';
-
+import { useNavigation} from '@react-navigation/native';
 import {
   View,
   Text,
@@ -11,10 +11,11 @@ import {
   RefreshControl,
 } from 'react-native';
 import { category } from '../../services'
-
 import styles from './styles'
 
 const Home = () => {
+
+  const navigation = useNavigation();
 
   // Use States
   const [isRefreshing, setRefreshing] = useState(false);
@@ -24,7 +25,7 @@ const Home = () => {
 
   const ListHeaderComponent = () => (
     <View style={styles.content}>
-      <Text style={styles.titleText}>Categorias</Text>
+      <Text style={styles.titleText}>Elije la categoría de tu interés</Text>
     </View>
   )
 
@@ -32,9 +33,13 @@ const Home = () => {
     <View style={styles.content}>
       { 
         categories.map((item) => (
-          <Card key={item.id} style={styles.cardContent}>
+          <Card style={[styles.cardContent]} key={item.id}>
             <TouchableOpacity>
-              <Text>{item.nombre}</Text>
+              <Text 
+                style={[{color: '#000'}]} 
+                onPress={ () => navigation.navigate("Ventures", item)} 
+              >{item.nombre}</Text>
+              
             </TouchableOpacity>
           </Card>
         ))
@@ -60,20 +65,20 @@ const Home = () => {
   }, [loading, data, error])
 
   return (
-    <SafeAreaView style={[styles.flexBox, styles.defaultBackground]}>
-    <FlatList
-      ListHeaderComponent={ListHeaderComponent}
-      ListFooterComponent={ListFooterComponent}
-      refreshControl={
-        <RefreshControl
-          colors={['#0000ff']}
-          tintColor="#0000ff"
-          refreshing={isRefreshing}
-          onRefresh={onRefresh}
-        />
-      }
-    />
-  </SafeAreaView>
+    <SafeAreaView class="bg-lime" style={[styles.flexBox, {backgroundColor: '#f1f5f9'}]}>
+      <FlatList
+        ListHeaderComponent={ListHeaderComponent}
+        ListFooterComponent={ListFooterComponent}
+        refreshControl={
+          <RefreshControl
+            colors={['#0000ff']}
+            tintColor="#0000ff"
+            refreshing={isRefreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      />
+    </SafeAreaView>
   )
 }
 
